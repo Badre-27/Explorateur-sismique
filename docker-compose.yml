@@ -1,0 +1,24 @@
+services:
+  mongo:
+    build: .
+    image: seismic-mongo:1.0
+    container_name: seismic-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo:/scripts
+
+  app:
+    build: ./app
+    image: seismic-app:1.0
+    container_name: seismic-app
+    ports:
+      - "8501:8501"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
