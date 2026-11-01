@@ -8,15 +8,27 @@ from pymongo import MongoClient
 
 st.set_page_config(page_title="Explorateur sismique", page_icon="🌍", layout="wide")
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+def get_uri():
+    # Streamlit Cloud: secret. Docker/local: environment variable.
+    try:
+        return st.secrets["MONGO_URI"]
+    except Exception:
+        return os.getenv("MONGO_URI", "mongodb://localhost:27017")
 
 
 @st.cache_resource
 def get_collection():
-    return MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)["seismic"]["events"]
+    client = MongoClient(get_uri(), serverSelectionTimeoutMS=10000)
+    return client["seismic"]["events"]
 
 
 col = get_collection()
+
+try:
+    col.database.client.admin.command("ping")
+except Exception:
+    st.error("Connexion à MongoDB impossible. Vérifiez MONGO_URI et l'accès réseau (Atlas).")
+    st.stop()
 
 st.title("Explorateur de données sismiques")
 st.caption("Source : catalogue USGS des séismes | Stockage : MongoDB | Préparation : PySpark")
