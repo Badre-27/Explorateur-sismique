@@ -13,7 +13,7 @@ DB_NAME = "seismic"
 COLL_NAME = "events"
 
 # ---- À MODIFIER : informations du groupe ----
-GROUPE = "Groupe 09"
+GROUPE = "Groupe 16, Sujet 09"
 MEMBRES = ["Badreddine Otmane", "Mohamed Amine Ahra"]
 ENCADRANT = ""          # laisser vide pour ne pas l'afficher
 
