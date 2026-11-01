@@ -26,8 +26,9 @@ col = get_collection()
 
 try:
     col.database.client.admin.command("ping")
-except Exception:
+except Exception as e:
     st.error("Connexion à MongoDB impossible. Vérifiez MONGO_URI et l'accès réseau (Atlas).")
+    st.code(f"{type(e).__name__}: {str(e)[:300]}")
     st.stop()
 
 st.title("Explorateur de données sismiques")
