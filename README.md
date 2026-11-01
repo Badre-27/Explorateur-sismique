@@ -20,7 +20,7 @@ Analyse d'un catalogue de séismes USGS avec PySpark, stockage dans MongoDB (Doc
 
 ## Utilisation
 
-**Lien Google Colab :** [Project.ipynb](https://colab.research.google.com/drive/1E3RXly3pvukFaxq5zX9E-ma7wFI1NNJR?usp=sharing)
+**Lien Google Colab :** [Project.ipynb](https://colab.research.google.com/drive/1E3RXly3pvukFaxq5zX9E-ma7wFI1NNJR)
 
 ### 1. Analyse Spark
 
