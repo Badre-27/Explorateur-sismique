@@ -15,7 +15,8 @@ def get_uri():
     except Exception:
         return os.getenv("MONGO_URI", "mongodb://localhost:27017")
 
-
+uri = get_uri()
+st.write("URI source:", "secret" if uri.startswith("mongodb+srv") else "fallback (localhost)")
 @st.cache_resource
 def get_collection():
     client = MongoClient(get_uri(), serverSelectionTimeoutMS=10000)
