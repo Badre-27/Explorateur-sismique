@@ -12,6 +12,11 @@ st.set_page_config(page_title="Explorateur sismique", page_icon="🌍", layout="
 DB_NAME = "seismic"
 COLL_NAME = "events"
 
+# ---- À MODIFIER : informations du groupe ----
+GROUPE = "Groupe 09"
+MEMBRES = ["Badreddine Otmane", "Mohamed Amine Ahra"]
+ENCADRANT = ""          # laisser vide pour ne pas l'afficher
+
 
 # ====================================================================
 # Connexion MongoDB
@@ -116,6 +121,13 @@ cats = st.sidebar.multiselect("Catégories de magnitude", all_cats, default=all_
 place_text = st.sidebar.text_input("Le lieu contient (ex. : Japan)")
 st.sidebar.caption("Les filtres s'appliquent aux onglets Tableau de bord, Tableaux et Données MongoDB.")
 
+# Crédit dans la barre latérale
+st.sidebar.divider()
+st.sidebar.markdown(
+    f"**Réalisé par**  \n{GROUPE}  \n" + "  \n".join(MEMBRES)
+    + (f"  \n\n**Encadrant**  \n{ENCADRANT}" if ENCADRANT else "")
+)
+
 query = build_query(d1, d2, mag_range[0], mag_range[1], tuple(cats), place_text)
 df = load_events(d1, d2, mag_range[0], mag_range[1], tuple(cats), place_text)
 
@@ -124,6 +136,7 @@ df = load_events(d1, d2, mag_range[0], mag_range[1], tuple(cats), place_text)
 # ====================================================================
 st.title("Explorateur de données sismiques")
 st.caption("Source : catalogue USGS des séismes | Stockage : MongoDB | Préparation : PySpark")
+st.caption(f"Réalisé par {', '.join(MEMBRES)} ({GROUPE})")
 
 tab_pres, tab_dash, tab_tables, tab_mongo = st.tabs(
     ["Présentation", "Tableau de bord", "Tableaux de résultats", "Données MongoDB"]
