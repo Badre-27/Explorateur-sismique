@@ -9,10 +9,11 @@ from pymongo import MongoClient
 st.set_page_config(page_title="Explorateur sismique", page_icon="🌍", layout="wide")
 
 def get_uri():
-    # Streamlit Cloud: secret. Docker/local: environment variable.
     try:
         return st.secrets["MONGO_URI"]
-    except Exception:
+    except Exception as e:
+        st.warning(f"Secret MONGO_URI non lu : {type(e).__name__}: {e}")
+        st.write("Clés de secrets disponibles :", list(st.secrets.keys()) if hasattr(st, "secrets") else "aucune")
         return os.getenv("MONGO_URI", "mongodb://localhost:27017")
 
 uri = get_uri()
